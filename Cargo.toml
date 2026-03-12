@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-surrealdb = { version = "2", features = ["kv-surrealkv", "kv-mem"] }
+surrealdb = { git = "https://github.com/adlk/surrealdb.git", branch = "fix/percent-decode-paths", features = ["kv-surrealkv", "kv-mem"] }
 tokio = { version = "1", features = ["full"] }
 serde = { version = "1", features = ["derive"] }

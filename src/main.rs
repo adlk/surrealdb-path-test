@@ -1,10 +1,10 @@
 use std::path::Path;
-use serde::{Deserialize, Serialize};
 use surrealdb::engine::any;
 use surrealdb::engine::local::SurrealKv;
 use surrealdb::Surreal;
+use surrealdb::types::SurrealValue;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, SurrealValue)]
 struct TestRecord {
     content: String,
 }
@@ -219,18 +219,7 @@ async fn main() {
     println!();
     if any_bug {
         println!("CONCLUSION: The percent-encoding bug exists in the Rust surrealdb crate.");
-        println!("  any::connect() parses the endpoint as a URL, and url::Url::path()");
-        println!("  returns percent-encoded strings. The crate uses this encoded path");
-        println!("  directly when opening the SurrealKV store on disk.");
-        println!();
-        println!("  If Scenario 1 failed but Scenario 2 passed, the bug is specifically");
-        println!("  in the any::connect() URL parsing path, not the typed engine API.");
-        println!();
-        println!("  If Scenario 3 also failed, it confirms that pre-encoded %20 gets");
-        println!("  double-encoded or passed through literally to the filesystem.");
     } else {
-        println!("CONCLUSION: No percent-encoding bug detected in the Rust crate.");
-        println!("  If the bug exists in the Node.js SDK, it likely originates in the");
-        println!("  JavaScript/NAPI layer rather than the Rust core.");
+        println!("CONCLUSION: No percent-encoding bug detected. The fix works!");
     }
 }
